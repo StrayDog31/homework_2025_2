@@ -28,3 +28,42 @@ QUnit.module("Тестируем функцию findUniqueProperties", function(
         assert.deepEqual(result, {}, "Идентичные объекты должны вернуть пустой объект.");
     });
 });
+
+QUnit.module("Тестируем ДОПОЛНИТЕЛЬНО функцию findUniqueProperties", function() {
+    QUnit.test("Работает правильно для объектов с вложенными структурами", function(assert) {
+        const result = findUniqueProperties(
+            { a: 1, b: {a: 1}, c: [1, 2] },
+            { a: 1, d: {a: 2}, c: [1, 2] }
+        );
+
+        assert.deepEqual(result, { b: {a: 1}, d: {a: 2} }, "Должны быть уникальные вложенные объекты.");
+    });
+
+    QUnit.test("Работает правильно для пустого объекта", function(assert) {
+        const result = findUniqueProperties(
+            {},
+            { a: 1, b: 2 }
+        );
+
+        assert.deepEqual(result, {a: 1, b: 2}, "Непустой объект вернется целиком.");
+    });
+    QUnit.test("Два пустых объекта", function (assert) {
+        const result = findUniqueProperties({}, {});
+
+        assert.deepEqual(
+        result,
+        {},
+        "Должен вернуться пустой объект."
+        );
+    });
+    QUnit.test("Работа с функцими", function (assert) {
+        const func1 = function() {return 1;}
+        const result = findUniqueProperties({a: 1, func: func1}, {b: 2, func: func1});
+
+        assert.deepEqual(
+          result,
+          { a: 1, b: 2 },
+          "Функции с одинаковой ссылкой считаются общими."
+        );
+    });
+});
