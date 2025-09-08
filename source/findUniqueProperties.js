@@ -14,13 +14,19 @@ function findUniqueProperties(object_1, object_2) {
     const result = {};
 
     for (const key in object_1) {
-      if (object_1.hasOwnProperty(key) && !object_2.hasOwnProperty(key)) {
+      if (
+        Object.prototype.hasOwnProperty.call(object_1, key) &&
+        !Object.prototype.hasOwnProperty.call(object_2, key)
+      ) {
         result[key] = object_1[key];
       }
     }
 
     for (const key in object_2) {
-      if (object_2.hasOwnProperty(key) && !object_1.hasOwnProperty(key)) {
+      if (
+        Object.prototype.hasOwnProperty.call(object_2, key) &&
+        !Object.prototype.hasOwnProperty.call(object_1, key)
+      ) {
         result[key] = object_2[key];
       }
     }

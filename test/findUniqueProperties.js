@@ -57,13 +57,22 @@ QUnit.module("Тестируем ДОПОЛНИТЕЛЬНО функцию findU
         );
     });
     QUnit.test("Работа с функцими", function (assert) {
-        const func1 = function() {return 1;}
-        const result = findUniqueProperties({a: 1, func: func1}, {b: 2, func: func1});
+      /**
+       * Функция для теста работы с функциями. (Даже для нее нужен jsdoc 0_0)
+       * @returns {1}
+       */
+      const func1 = function () {
+        return 1;
+      };
+      const result = findUniqueProperties(
+        { a: 1, func: func1 },
+        { b: 2, func: func1 }
+      );
 
-        assert.deepEqual(
-          result,
-          { a: 1, b: 2 },
-          "Функции с одинаковой ссылкой считаются общими."
-        );
+      assert.deepEqual(
+        result,
+        { a: 1, b: 2 },
+        "Функции с одинаковой ссылкой считаются общими."
+      );
     });
 });
