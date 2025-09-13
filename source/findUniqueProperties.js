@@ -17,7 +17,9 @@
  * // returns { x: 10, z: 30 }
  * findUniqueProperties({ x: 10, y: 20 }, { y: 20, z: 30 });
  */
-function findUniqueProperties(object_1, object_2) {
+
+//Функция теперь стрелочная
+const findUniqueProperties = (object_1, object_2) => {
   //Реализовал проверку, что аргументы - это объекты
   if (
     typeof object_1 !== "object" ||
@@ -28,22 +30,20 @@ function findUniqueProperties(object_1, object_2) {
     throw new TypeError("Все аргументы должны быть объектами!");
   }
 
-  const keys_1 = Object.keys(object_1);
-  const keys_2 = Object.keys(object_2);
-
   const result = {};
 
-  for (const key of keys_1) {
-    if (!keys_2.includes(key)) {
-      result[key] = object_1[key];
+  //Использую forEach
+  Object.keys(object_1).forEach(key => {
+    if (!(key in object_2)) {
+      result[key] = object_1[key]
     }
-  }
+  })
 
-  for (const key of keys_2) {
-    if (!keys_1.includes(key)) {
+  Object.keys(object_2).forEach((key) => {
+    if (!(key in object_1)) {
       result[key] = object_2[key];
     }
-  }
+  });
 
   return result;
 }
